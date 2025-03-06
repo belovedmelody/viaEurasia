@@ -61,13 +61,11 @@ struct TrailListingView: View {
     }
 }
 
-#Preview {
-    Group {
-        RoutesView()
-            .previewDisplayName("Light Mode")
-        
-        RoutesView()
-            .preferredColorScheme(.dark)
-            .previewDisplayName("Dark Mode")
-    }
+#Preview("Light Mode") {
+    RoutesView()
+}
+
+#Preview("Dark Mode") {
+    RoutesView()
+        .preferredColorScheme(.dark)
 } 

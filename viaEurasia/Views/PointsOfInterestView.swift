@@ -65,13 +65,11 @@ struct PointOfInterestRow: View {
     }
 }
 
-#Preview {
-    Group {
-        PointsOfInterestView()
-            .previewDisplayName("Light Mode")
-        
-        PointsOfInterestView()
-            .preferredColorScheme(.dark)
-            .previewDisplayName("Dark Mode")
-    }
+#Preview("Light Mode") {
+    PointsOfInterestView()
+}
+
+#Preview("Dark Mode") {
+    PointsOfInterestView()
+        .preferredColorScheme(.dark)
 } 
