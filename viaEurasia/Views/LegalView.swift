@@ -1,6 +1,15 @@
 import SwiftUI
 
 struct LegalView: View {
+    let logoSymbols = [
+        "building.columns.fill",      // Institution/Government
+        "leaf.fill",                  // Environmental/Nature
+        "globe.europe.africa.fill",   // International/EU
+        "hands.and.sparkles.fill",    // Community/Support
+        "flag.2.crossed.fill",        // Partnership/Collaboration
+        "building.2.fill"             // Organization/Foundation
+    ]
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 30) {
@@ -8,8 +17,6 @@ struct LegalView: View {
                 HStack {
                     Image(systemName: "flag.fill")
                         .imageScale(.large)
-                    Text("Flags")
-                        .font(.title2)
                 }
                 
                 // Funding Text
@@ -40,11 +47,13 @@ struct LegalView: View {
                     GridItem(.flexible()),
                     GridItem(.flexible())
                 ], spacing: 20) {
-                    ForEach(0..<6) { index in
-                        Image(systemName: "mountain.2.fill")
+                    ForEach(logoSymbols, id: \.self) { symbol in
+                        Image(systemName: symbol)
                             .imageScale(.large)
                             .font(.system(size: 40))
+                            .foregroundColor(.accentColor)
                             .frame(height: 80)
+                            .frame(maxWidth: .infinity)
                             .background(Color(uiColor: .secondarySystemBackground))
                             .cornerRadius(10)
                     }

@@ -21,7 +21,7 @@ struct HomeView: View {
             NavigationLink(destination: RoutesView()) {
                 Text("Select Route")
                     .font(.headline)
-                    .foregroundColor(Color(uiColor: .systemBackground))
+                    .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.accentColor)
@@ -34,7 +34,7 @@ struct HomeView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 NavigationLink(destination: SettingsView()) {
                     Image(systemName: "gearshape.fill")
-                        .foregroundColor(.primary)
+                        .foregroundColor(.accentColor)
                 }
             }
         }
