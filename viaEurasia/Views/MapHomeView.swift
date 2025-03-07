@@ -35,7 +35,7 @@ struct MapHomeView: View {
             Color.clear.frame(width: 0)
         }
         .safeAreaInset(edge: .top) {
-            Color.clear.frame(height: 80)
+            Color.clear.frame(height: 40)
         }
         .safeAreaInset(edge: .bottom) {
             Color.clear.frame(height: 100)
