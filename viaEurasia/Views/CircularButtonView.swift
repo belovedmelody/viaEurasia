@@ -22,28 +22,26 @@ struct CircularButtonView: View {
     }
     
     var body: some View {
-        VStack(spacing: 8) {
-            Button(action: action) {
-                buttonContent
-            }
-            
-            Text(label)
-                .font(.caption)
-                .foregroundColor(.gray)
-                .multilineTextAlignment(.center)
-            
-            Spacer()
-        }
-        .frame(width: 80)
-    }
-    
-    private var buttonContent: some View {
-        Image(systemName: symbol)
-            .font(.system(size: 24))
-            .foregroundColor(foregroundColor)
+        Circle()
+            .fill(backgroundColor)
             .frame(width: 60, height: 60)
-            .background(backgroundColor)
-            .clipShape(Circle())
+            .overlay(alignment: .top) {
+                VStack(spacing: 8) {
+                    Button(action: action) {
+                        Image(systemName: symbol)
+                            .font(.system(size: 24))
+                            .foregroundColor(foregroundColor)
+                            .frame(width: 60, height: 60)
+                    }
+                    
+                    Text(label)
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .frame(width: 80)
     }
 }
 
@@ -70,32 +68,32 @@ struct NavigatingCircularButtonView<Destination: View>: View {
     }
     
     var body: some View {
-        VStack(spacing: 8) {
-            NavigationLink(destination: destination) {
-                Image(systemName: symbol)
-                    .font(.system(size: 24))
-                    .foregroundColor(foregroundColor)
-                    .frame(width: 60, height: 60)
-                    .background(backgroundColor)
-                    .clipShape(Circle())
+        Circle()
+            .fill(backgroundColor)
+            .frame(width: 60, height: 60)
+            .overlay(alignment: .top) {
+                VStack(spacing: 8) {
+                    NavigationLink(destination: destination) {
+                        Image(systemName: symbol)
+                            .font(.system(size: 24))
+                            .foregroundColor(foregroundColor)
+                            .frame(width: 60, height: 60)
+                    }
+                    
+                    Text(label)
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
-            
-            Text(label)
-                .font(.caption)
-                .foregroundColor(.gray)
-                .multilineTextAlignment(.center)
-            
-            Spacer()
-        }
-        .frame(width: 80)
+            .frame(width: 80)
     }
 }
 
 #Preview {
     HStack(spacing: 20) {
         CircularButtonView(symbol: "map.fill", label: "Map")
-        CircularButtonView(symbol: "location.fill", label: "Location")
-        CircularButtonView(symbol: "star.fill", label: "Favorites")
         NavigatingCircularButtonView(
             symbol: "mappin",
             label: "Points",

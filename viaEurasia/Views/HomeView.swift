@@ -12,11 +12,6 @@ struct HomeView: View {
                 .imageScale(.large)
                 .font(.system(size: 60))
             
-            // Disclaimer
-            Text("Disclaimer: Please check local conditions before hiking")
-                .font(.caption)
-                .foregroundColor(.secondary)
-            
             // Route Selection Button
             NavigationLink(destination: RoutesView()) {
                 Text("Select Route")
@@ -28,6 +23,11 @@ struct HomeView: View {
                     .cornerRadius(10)
             }
             .padding(.horizontal)
+            
+            // Disclaimer
+            Text("Disclaimer: Please check local conditions before hiking")
+                .font(.caption)
+                .foregroundColor(.secondary)
         }
         .padding()
         .toolbar {

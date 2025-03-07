@@ -4,68 +4,79 @@ struct RoutesView: View {
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 20) {
-                ForEach(0..<5) { index in
-                    TrailListingView()
+                ForEach(routes) { route in
+                    TrailListingView(route: route)
                 }
             }
-            .padding()
+            .padding(.top)
         }
         .navigationTitle("Routes")
+        .navigationBarTitleDisplayMode(.large)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                NavigationLink(destination: SettingsView()) {
+                    Image(systemName: "gearshape.fill")
+                }
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink(destination: MapHomeView()) {
+                    Image(systemName: "map.fill")
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
     }
 }
 
 struct TrailListingView: View {
-    let gradientColors: [(Color, Color)] = [
-        (Color(red: 0.2, green: 0.8, blue: 0.2), Color(red: 0.1, green: 0.6, blue: 0.1)), // Green
-        (Color(red: 1.0, green: 0.8, blue: 0.0), Color(red: 1.0, green: 0.6, blue: 0.0)), // Yellow
-        (Color(red: 0.0, green: 0.6, blue: 1.0), Color(red: 0.0, green: 0.4, blue: 0.8)), // Blue
-        (Color(red: 1.0, green: 0.4, blue: 0.7), Color(red: 0.8, green: 0.2, blue: 0.5)), // Pink
-        (Color(red: 1.0, green: 0.8, blue: 0.0), Color(red: 0.8, green: 0.6, blue: 0.0))  // Gold
-    ]
+    let route: Route
+    @State private var selectedRoute: Route?
     
     var body: some View {
-        NavigationLink(destination: RouteDetailView()) {
-            VStack(alignment: .leading, spacing: 10) {
-                // Photo with gradient
-                LinearGradient(
-                    gradient: Gradient(colors: [gradientColors[Int.random(in: 0..<gradientColors.count)].0,
-                                              gradientColors[Int.random(in: 0..<gradientColors.count)].1]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
+        NavigationLink(destination: RouteDetailView(route: route, selectedRoute: $selectedRoute, showBackButton: false)) {
+            VStack(alignment: .leading, spacing: 0) {
+                // Photo with trailing crop
+                GeometryReader { geometry in
+                    Image(route.imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: geometry.size.width, height: 200)
+                        .clipped()
+                        .alignmentGuide(.trailing) { d in d[.trailing] }
+                }
                 .frame(height: 200)
-                .cornerRadius(10)
-                .overlay(
-                    Image(systemName: "mountain.2.fill")
-                        .font(.system(size: 60))
-                        .foregroundColor(.white.opacity(0.8))
-                )
                 
                 // Trail Info
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Trail #\(Int.random(in: 1...100))")
+                    Text("\(route.id). \(route.name)")
                         .font(.headline)
-                    Text("Trail Title")
-                        .font(.title3)
-                    Text("Length: \(Int.random(in: 5...20)) km")
+                        .fontWeight(.bold)
+                    Text(route.length > 0 ? "\(route.length) km" : "Length unknown")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
+                .padding()
             }
-            .padding()
             .background(Color(uiColor: .secondarySystemBackground))
             .cornerRadius(15)
             .shadow(radius: 5)
         }
         .buttonStyle(PlainButtonStyle())
+        .padding(.horizontal)
     }
 }
 
 #Preview("Light Mode") {
-    RoutesView()
+    NavigationStack {
+        RoutesView()
+    }
 }
 
 #Preview("Dark Mode") {
-    RoutesView()
-        .preferredColorScheme(.dark)
+    NavigationStack {
+        RoutesView()
+    }
+    .preferredColorScheme(.dark)
 } 
